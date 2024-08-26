@@ -20,6 +20,7 @@ const Navbar = () => {
                 {token ? (
                     <>
                         <li><Link to="/produtos">Produtos</Link></li>
+                        <li><Link to = "/add-produto">Adicionar Produto</Link></li>
                         <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
                     </>
                 ) : (

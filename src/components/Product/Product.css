@@ -1,5 +1,70 @@
-.product-list-container{
-    max-width: 90%;
+/* src/components/Product.css */
+
+.product-list-container {
+    max-width: 800px;
     margin: 2rem auto;
-    background-color: #fff;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-list-container h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.875rem;
+}
+
+/* tr:hover {
+    background-color: #f1f1f1;
+} */
+
+td > button {
+    padding: 0.4rem;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #007bff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-right: 8px; /* Gap entre os botões */
+    width: 36px; /* Deixar os botões quadrados */
+    height: 36px; /* Deixar os botões quadrados */
+}
+
+td > button:last-child {
+    margin-right: 0; /* Remover o gap no último botão */
+}
+
+td > button:hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }

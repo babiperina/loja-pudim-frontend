@@ -24,7 +24,8 @@ const ProductList = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            setProdutos(response.data.data);
+            // setProdutos(response.data.data);
+            setProdutos(response.data.data.filter(produto => produto.quantidade_em_estoque > 0));
         } catch (err) {
             console.error('Erro ao buscar produtos:', err.response?.status, err.message);
             if (err.response?.status === 403) {
@@ -66,6 +67,7 @@ const ProductList = () => {
             setProdutos(produtos.map(produto =>
                 produto.id === id && produto.quantidade_em_estoque > 0 ? { ...produto, quantidade_em_estoque: produto.quantidade - 1 } : produto
             ));
+            fetchProdutos();  // Recarrega os produtos após a adição
         } catch (err) {
             console.error('Erro ao remover do estoque:', err.response?.status, err.message);
         }

@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/NavBar';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import ProductList from './components/Product/ProductList';
+import AddProduct from './components/Product/AddProduct';
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/produtos" element={<ProductList />} />
+                <Route path='/add-produto' element={<AddProduct />} />
             </Routes>
         </Router>
     );

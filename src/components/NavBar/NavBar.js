@@ -17,14 +17,14 @@ const Navbar = () => {
     return (
         <nav>
             <ul>
-                <li><Link to="/">Login</Link></li>
                 {token ? (
                     <>
                         <li><Link to="/produtos">Produtos</Link></li>
-                        <li><button onClick={handleLogout}>Logout</button></li>
+                        <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
                     </>
                 ) : (
                     <>
+                        <li><Link to="/">Login</Link></li>
                         <li><Link to="/register">Register</Link></li>
                     </>
                 )}

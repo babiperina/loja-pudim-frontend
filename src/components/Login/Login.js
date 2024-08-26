@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../Common.css';
 import './Login.css'; // Importe o CSS aqui
-
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -27,36 +27,38 @@ const Login = () => {
                 setError('Credenciais inválidas');
             }
         } catch (err) {
-            setError('Erro ao fazer login');
+            setError('Credenciais inválidas. Email ou senha incorretos. Tente novamente ou crie uma conta.');
         }
     };
 
     return (
-        <div className="login-container">
-            <h1>Login</h1>
+        <div className="forms-container">
+            <h1>Fazer login</h1>
             <form onSubmit={handleLogin}>
-                <div>
+                {error && <p className='error-message'>{error}</p>}
+                <div className='input-group'>
                     <label>Email:</label>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        placeholder='example@email.com'
                         required
                     />
                 </div>
-                <div>
+                <div className='input-group'>
                     <label>Senha:</label>
                     <input
                         type="password"
                         value={senha}
                         onChange={(e) => setSenha(e.target.value)}
+                        placeholder='********'
                         required
                     />
                 </div>
                 <button type="submit">Entrar</button>
-                {error && <p>{error}</p>}
+                <button onClick={() => navigate('/register')}>Criar Conta</button>
             </form>
-            <button onClick={() => navigate('/register')}>Criar Conta</button>
         </div>
     );
 };

@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Register.css'; // Importe o CSS aqui
+import '../Common.css';
+// import './Register.css'; // Importe o CSS aqui
 
 
 const Register = () => {
@@ -20,7 +21,7 @@ const Register = () => {
             const response = await axios.post('http://localhost:3000/api/register', { nome, email, senha });
             
             if (response.data.message === 'Usuário criado com sucesso') {
-                navigate('/login');
+                navigate('/');
             } else {
                 setError('Erro ao criar conta');
             }
@@ -30,10 +31,10 @@ const Register = () => {
     };
 
     return (
-        <div className="register-container">
+        <div className="forms-container">
             <h1>Criar Conta</h1>
             <form onSubmit={handleRegister}>
-                <div>
+                <div className='input-group'>
                     <label>Nome:</label>
                     <input
                         type="text"
@@ -42,7 +43,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                <div>
+                <div className='input-group'>
                     <label>Email:</label>
                     <input
                         type="email"
@@ -51,7 +52,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                <div>
+                <div className='input-group'>
                     <label>Senha:</label>
                     <input
                         type="password"

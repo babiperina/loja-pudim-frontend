@@ -1,38 +1,47 @@
-// src/components/Login.js
+// src/components/Register.js
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Register.css'; // Importe o CSS aqui
 
-const Login = () => {
+
+const Register = () => {
+    const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const handleLogin = async (event) => {
+    const handleRegister = async (event) => {
         event.preventDefault();
         
         try {
-            // Simulação de login. Substitua com a chamada real à API de autenticação.
-            const response = await axios.post('http://localhost:3000/api/login', { email, senha });
+            const response = await axios.post('http://localhost:3000/api/register', { nome, email, senha });
             
-            if (response.data.token) {
-                // Armazenar o token (opcional) e redirecionar
-                localStorage.setItem('token', response.data.token);
-                navigate('/produtos');
+            if (response.data.message === 'Usuário criado com sucesso') {
+                navigate('/login');
             } else {
-                setError('Credenciais inválidas');
+                setError('Erro ao criar conta');
             }
         } catch (err) {
-            setError('Erro ao fazer login');
+            setError('Erro ao criar conta');
         }
     };
 
     return (
-        <div className="login-container">
-            <h1>Login</h1>
-            <form onSubmit={handleLogin}>
+        <div className="register-container">
+            <h1>Criar Conta</h1>
+            <form onSubmit={handleRegister}>
+                <div>
+                    <label>Nome:</label>
+                    <input
+                        type="text"
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value)}
+                        required
+                    />
+                </div>
                 <div>
                     <label>Email:</label>
                     <input
@@ -51,12 +60,11 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit">Entrar</button>
+                <button type="submit">Registrar</button>
                 {error && <p>{error}</p>}
             </form>
-            <button onClick={() => navigate('/register')}>Criar Conta</button>
         </div>
     );
 };
 
-export default Login;
+export default Register;

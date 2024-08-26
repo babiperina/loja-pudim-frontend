@@ -1,45 +1,40 @@
-// src/components/Register.js
+// src/components/Login.js
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Login.css'; // Importe o CSS aqui
 
-const Register = () => {
-    const [nome, setNome] = useState('');
+
+const Login = () => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const handleRegister = async (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();
         
         try {
-            const response = await axios.post('http://localhost:3000/api/register', { nome, email, senha });
+            // Simulação de login. Substitua com a chamada real à API de autenticação.
+            const response = await axios.post('http://localhost:3000/api/login', { email, senha });
             
-            if (response.data.message === 'Usuário criado com sucesso') {
-                navigate('/login');
+            if (response.data.token) {
+                // Armazenar o token (opcional) e redirecionar
+                localStorage.setItem('token', response.data.token);
+                navigate('/produtos');
             } else {
-                setError('Erro ao criar conta');
+                setError('Credenciais inválidas');
             }
         } catch (err) {
-            setError('Erro ao criar conta');
+            setError('Erro ao fazer login');
         }
     };
 
     return (
-        <div className="register-container">
-            <h1>Criar Conta</h1>
-            <form onSubmit={handleRegister}>
-                <div>
-                    <label>Nome:</label>
-                    <input
-                        type="text"
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
-                        required
-                    />
-                </div>
+        <div className="login-container">
+            <h1>Login</h1>
+            <form onSubmit={handleLogin}>
                 <div>
                     <label>Email:</label>
                     <input
@@ -58,11 +53,12 @@ const Register = () => {
                         required
                     />
                 </div>
-                <button type="submit">Registrar</button>
+                <button type="submit">Entrar</button>
                 {error && <p>{error}</p>}
             </form>
+            <button onClick={() => navigate('/register')}>Criar Conta</button>
         </div>
     );
 };
 
-export default Register;
+export default Login;

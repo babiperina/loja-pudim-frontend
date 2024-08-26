@@ -46,7 +46,6 @@ const ProductList = () => {
     return (
         <div className="product-list-container">
             <h1>Lista de Produtos</h1>
-            <button onClick={handleLogout}>Logout</button>
             <ul>
                 {produtos.map(produto => (
                     <li key={produto.id}>

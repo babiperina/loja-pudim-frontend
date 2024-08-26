@@ -2,40 +2,55 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
     const [produtos, setProdutos] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
+        // src/components/ProductList.js
+
         const fetchProdutos = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/produtos');
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    navigate('/login');
+                    return;
+                }
+
+                const response = await axios.get('http://localhost:3000/api/produtos', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 setProdutos(response.data.data);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
+            } catch (err) {
+                console.error('Erro ao buscar produtos:', err.response?.status, err.message);
+                if (err.response?.status === 403) {
+                    // Token inválido ou expirado
+                    localStorage.removeItem('token');
+                    navigate('/login');
+                }
             }
         };
 
         fetchProdutos();
-    }, []);
+    }, [navigate]);
 
-    if (loading) return <p>Carregando...</p>;
-    if (error) return <p>Erro: {error}</p>;
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    };
 
     return (
-        <div>
+        <div className="product-list-container">
             <h1>Lista de Produtos</h1>
+            <button onClick={handleLogout}>Logout</button>
             <ul>
-                {produtos.map((produto) => (
+                {produtos.map(produto => (
                     <li key={produto.id}>
-                        <h2>{produto.nome}</h2>
-                        <p>Descrição: {produto.descricao || 'N/A'}</p>
-                        <p>Preço: R${produto.preco.toFixed(2)}</p>
-                        <p>Quantidade em Estoque: {produto.quantidade_em_estoque}</p>
+                        {produto.nome} - {produto.preco} reais
                     </li>
                 ))}
             </ul>
